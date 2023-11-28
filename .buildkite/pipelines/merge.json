@@ -1,0 +1,22 @@
+{
+  "name": "$PIPELINE_NAME",
+  "description": "Pipeline for $PIPELINE_NAME merge",
+  "repository": "$REPOSITORY",
+  "default_branch": "master",
+  "steps": [
+    {
+      "type": "script",
+      "name": ":buildkite: $PIPELINE_TYPE",
+      "command": "buildkite-agent pipeline upload $SERVICE/.buildkite/$PIPELINE_TYPE.yml"
+    }
+  ],
+  "cancel_running_branch_builds": true,
+  "skip_queued_branch_builds": true,
+  "branch_configuration": "master",
+  "provider_settings": {
+    "trigger_mode": "code",
+    "build_pull_requests": false,
+    "publish_blocked_as_pending": true,
+    "publish_commit_status_per_step": true
+  }
+}
