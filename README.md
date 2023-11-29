@@ -9,39 +9,39 @@ The monorepo, serves as a unified, version-controlled repository that houses mul
 
 * Reduce overhead associated with duplicating code for microservices.
 * Easily maintain and monitor the code
+ 
 
-
-<br/>  
 
 ## User Manual
 
-Create Folders and/or Sub folders in the repository to watch, we will be using `app/` and `test/` folders
+Directories Layout for the example repository
 
 ```
-├── .buildkite
-│   ├── pipelines
-├── app
-|   ├── .buildkite
-│   ├── bin
-├── bin
-├── test
-|   ├── .buildkite
-│   ├── bin
+├── .buildkite                          # Watch Folder
+│   ├── pipelines                       # Watch Folder
+├── app                                 # Watch Folder
+|   ├── .buildkite                      # Watch Folder
+│   ├── bin                             # Watch Folder
+├── bin                                 # Watch Folder
+├── test                                # Watch Folder
+|   ├── .buildkite                      # Watch Folder
+│   ├── bin                             # Watch Folder
 ├── .gitignore
 └── README.md
 
 ```
+Create Folders and/or Sub folders in the repository to watch.  Any directory in the repository can be watched  with the `watch` attribute and its `path`
 
-#### Webhooks
-
-Configure Webhooks in the Github Repository settings for your pipeline to subscribe to `Pushes`, `Deployments` and `Pull Requests` events. You must be a repository owner or have admin access in the repository to create webhooks.
-
+**Requirements**
+* Configure Webhooks in the Github Repository settings for your pipeline to subscribe to `Pushes`, `Deployments` and `Pull Requests` events. You must be a repository owner or have admin access in the repository to create webhooks.
 
 
-#### monorepo-diff-buildkite-plugin
-We would be using the buildkite monorepo-diff plugin, it will assist in triggering pipelines by watching folders in the monorepo. The configuration supports running [Command](https://buildkite.com/docs/pipelines/command-step) or [Triggering](https://buildkite.com/docs/pipelines/trigger-step)
+<br/>
 
-The user has to explictly state the paths they want to monitor. For example if a user specifies `app/` as the path and changes are made to `app/bin` it will not trigger the config because the subfolder was not specified.
+## Using the monorepo-diff-buildkite-plugin
+The  [**monorepo-diff buildkite plugin**](https://github.com/buildkite-plugins/monorepo-diff-buildkite-plugin), assist in triggering pipelines by watching folders in the monorepo. The configuration supports running [Command](https://buildkite.com/docs/pipelines/command-step) and [Trigger](https://buildkite.com/docs/pipelines/trigger-step) steps
+
+⚠️  Warning : The user has to explictly state the paths they want to monitor. For instance if a user,  is only watching path `app/` changes made to `app/bin` will not trigger the configuration. This is because the subfolder `/bin` was not specified.
 
 
 <br/>
@@ -65,8 +65,8 @@ steps:
 ```
 
 
-* Changes to the path `app/` triggers the the pipeline `app-deploy`
-* Changes to the path `test/bin` will run the respectively config command
+* Changes to the path `app/` triggers the pipeline `app-deploy`
+* Changes to the path `test/bin` will run the respective configuration command
 
 <br/>
 
@@ -99,8 +99,8 @@ See [**How to set up Continuous Integration for monorepo using Buildkite**](http
                         release-version: "1.1"
 ```
 
-* When changes are detected in the path `test/.buildkite/`  it triggers the the pipeline `test-pipeline`
-* If the changes are made to either `app/` or `app/bin/service/` it triggers `data-generator`
+* When changes are detected in the path `test/.buildkite/`  it triggers the pipeline `test-pipeline`
+* If the changes are made to either `app/` or `app/bin/service/` it triggers the pipeline `data-generator`
 
 
 <br/>
