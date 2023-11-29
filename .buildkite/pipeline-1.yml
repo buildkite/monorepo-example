@@ -1,0 +1,17 @@
+    steps:
+      - label: "Triggering pipelines with plugin"
+        plugins:
+          - buildkite-plugins/monorepo-diff#v1.0.1:
+             watch:           
+              - path: test/src/
+                config: # Required [trigger step configuration]
+                  trigger: test-pipeline # Required [trigger pipeline slug]
+              - path:
+                  - app/
+                  - app/dist/
+                config:
+                    trigger: "data-generator"
+                    label: ":package: Generate data"
+                    build:
+                      meta_data:
+                        release-version: "1.1"

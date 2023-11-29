@@ -1,0 +1,12 @@
+steps:
+  - label: "Triggering pipelines"
+    plugins:
+      - buildkite-plugins/monorepo-diff#v1.0.1:
+          diff: "git diff --name-only HEAD~1"
+          watch:
+            - path: app/
+              config:
+                trigger: "app-deploy"
+            - path: test/src/bin
+              config:
+                command: "echo Make Changes to Bin"
