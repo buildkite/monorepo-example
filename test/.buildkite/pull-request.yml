@@ -1,0 +1,5 @@
+steps:
+  - label: "Foo service pull request"
+    command:
+      - "echo linting"
+      - "echo testing"

@@ -1,0 +1,3 @@
+steps:
+  - label: "Deploying bar service to ${STAGE}"
+    command: "./bar-service/bin/deploy ${STAGE}"
