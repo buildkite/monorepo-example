@@ -69,7 +69,7 @@ The  [**monorepo-diff buildkite plugin**](https://github.com/buildkite-plugins/m
  
  <br/>
  
- ⚠️  Warning : The user has to explictly state the paths they want to monitor. For instance if a user,  is only watching path `app/` changes made to `app/bin` will not trigger the configuration. This is because the subfolder `/bin` was not specified.
+ ⚠️  Warning : The user has to explictly state the paths they want to monitor. For instance if a user,  is only watching path `app/` changes made to `app/bin` will trigger the configuration. This is because the subfolder `/bin` even though not specified, is still under the parent folder.
  
  <br/>
  
