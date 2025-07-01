@@ -1,0 +1,8 @@
+name: "Monorepo Example: Service App"
+description: "An example pipeline that runs when changes are detected in the service-app folder."
+emoji: ":classical_building:"
+languages:
+  - "Shell"
+steps:
+  - command: "buildkite-agent pipeline upload service-app/.buildkite/pipeline.yml"
+    label: ":pipeline:"

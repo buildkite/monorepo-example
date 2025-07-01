@@ -1,0 +1,3 @@
+steps:
+  - label: ":test_tube: Run Tests"
+    command: echo "Running Tests..."

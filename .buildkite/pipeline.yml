@@ -1,0 +1,14 @@
+steps:
+  - label: "Detect changed projects"
+    plugins:
+      - monorepo-diff#v1.3.0:
+          diff: .buildkite/scripts/git-diff-files.sh
+          watch:
+            - path: "service-app"
+              config:
+                trigger: "monorepo-service-app-example"
+            - path: "test"
+              config:
+                trigger: "monorepo-test-example"
+
+

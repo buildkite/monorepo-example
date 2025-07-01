@@ -1,109 +1,156 @@
-# Buildkite-Monorepo-Example
+# Buildkite Monorepo Example
+
+This repository demonstrates a [Buildkite](https://buildkite.com/) setup for managing **multiple pipelines within a single monorepo** using the [monorepo-diff plugin](https://github.com/buildkite-plugins/monorepo-diff-buildkite-plugin).
+
+👉 **See these examples in action:**
+
+- [Root pipeline](https://buildkite.com/your-org/monorepo-example/builds/latest?branch=main) - detects changes and triggers other pipelines
+- [Service App pipeline](https://buildkite.com/your-org/monorepo-service-app-example/builds/latest?branch=main) - runs service-app pipeline
+- [Test pipeline](https://buildkite.com/your-org/monorepo-test-example/builds/latest?branch=main) - runs test pipeline
+
+<a href="https://buildkite.com/your-org/monorepo-example/builds/latest?branch=main">
+  <img width="2400" alt="Screenshot of the root monorepo pipeline" src=".buildkite/screenshot-1.png" />
+</a>
+<p align="left"><i>Root pipeline: detects changed folders and triggers service/test pipelines</i></p>
+
+<a href="https://buildkite.com/your-org/monorepo-service-app-example/builds/latest?branch=main">
+  <img width="2400" alt="Screenshot of service-app pipeline" src=".buildkite/screenshot-2.png" />
+</a>
+<p align="left"><i>Service App pipeline: triggered by changes to <code>service-app/</code></i></p>
+
+<a href="https://buildkite.com/your-org/monorepo-test-example/builds/latest?branch=main">
+  <img width="2400" alt="Screenshot of test pipeline" src=".buildkite/screenshot-3.png" />
+</a>
+<p align="left"><i>Test pipeline: triggered by changes to <code>test/</code></i></p>
+
+<!-- docs:start -->
+
+## How it works
+
+This repository contains:
+
+- A **root pipeline** (`.buildkite/pipeline.yml`) that uses the `monorepo-diff` plugin to detect changes and trigger sub-pipelines.
+- A `service-app` folder with its own `.buildkite/pipeline.yml`
+- A `test` folder with its own `.buildkite/pipeline.yml`
+
+Each sub-pipeline is triggered when files within its folder change.
 
 
-
-[![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new)
-
-
-The monorepo allows users to house multiple independent projects in one repository, giving you flexibility, easy management, and a simpler way to keep track of changes by watching folders
 
 ## Setup
-To Get Started Fork the repository. Any directory in the repository can be watched  by specifying the `watch` attribute and its `path` in the pipeline configuration
 
-See [**How to set up Continuous Integration for monorepo using Buildkite**](https://adikari.medium.com/set-up-continuous-integration-for-monorepo-using-buildkite-61539bb0ed76) for step-by-step instructions
+To get started, **fork this repository** and [create the pipelines using the buttons below](#create-the-pipelines).
 
-<br/>
+You can watch any directory in your monorepo by specifying the `watch` attribute and its `path` in the root pipeline.
 
-**Project Directories Structure**
+For a step-by-step walkthrough, see:
+[**How to set up Continuous Integration for a monorepo using Buildkite**](https://adikari.medium.com/set-up-continuous-integration-for-monorepo-using-buildkite-61539bb0ed76)
 
-```
-├── .buildkite                          # Watch Folder
-│   ├── pipelines                       # Watch Folder
-├── app                                 # Watch Folder
-|   ├── .buildkite                      # Watch Folder
-│   ├── bin                             # Watch Folder
-├── bin                                 # Watch Folder
-├── test                                # Watch Folder
-|   ├── .buildkite                      # Watch Folder
-│   ├── bin                             # Watch Folder
-├── .gitignore
-└── README.md
+
+**Project Directories Structure (simplified)**
 
 ```
+.
+├── .buildkite
+│   ├── pipeline.yml            # Root pipeline: uses monorepo-diff
+│   ├── scripts
+│   │   └── git-diff-files.sh   # Diff script for detecting changes
+├── service-app
+│   ├── .buildkite
+│   │   └── pipeline.yml        # service-app pipeline definition
+└── test
+    ├── .buildkite
+    │   └── pipeline.yml        # test pipeline definition
+├── README.md
+```
+
+## Root Pipeline Example
+
+The root pipeline uses the `monorepo-diff` plugin:
+
+```yaml
+steps:
+  - label: "Detect changed projects"
+    plugins:
+      - monorepo-diff#v1.3.0:
+          diff: .buildkite/scripts/git-diff-files.sh
+          watch:
+            - path: "service-app"
+              config:
+                trigger: "monorepo-service-app-example"
+            - path: "test"
+              config:
+                trigger: "monorepo-test-example"
+```
+
+## Sub-Pipeline Setup
+Each triggered pipeline (e.g. `monorepo-service-app-example`) should have a step like the following in its pipeline settings, so it knows which config file to load:
+
+For the `monorepo-service-app-example` pipeline:
+```yaml
+steps:
+  - label: ":pipeline:"
+    command: "buildkite-agent pipeline upload service-app/.buildkite/pipeline.yml"
+```
+
+For the `monorepo-test-example` pipeline:
+```yaml
+steps:
+  - label: ":pipeline:"
+    command: "buildkite-agent pipeline upload test/.buildkite/pipeline.yml"
+```
+
+> 💡 You can configure this in the Buildkite UI under Pipeline Settings → Steps, or commit a .buildkite/pipeline.yml file directly in the appropriate folder and use it as the pipeline source.
+>
+> ⚠️ **Avoid recursion!**
+>
+> Each pipeline points to the same repository. To avoid recursively loading the root pipeline again (which could cause infinite loops), each sub-pipeline should explicitly upload its own `.buildkite/pipeline.yml` using:
+>
+> ```yaml
+> command: "buildkite-agent pipeline upload path/to/.buildkite/pipeline.yml"
+> ```
 
 
-**Requirement**
-* Configure Webhooks in the Github Repository settings for your pipeline to subscribe to `Pushes`, `Deployments` and `Pull Requests` events. Can get the **Payload URL** from the pipeline's github settings setup instructions. If you don't have the permission, you'll need to get your repository admin to do this step. 
+## Create the Pipelines
 
+### 1. **Create the Root Pipeline**
 
+This pipeline uses the `monorepo-diff` plugin to detect changes and trigger the sub-pipelines.
 
+[![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new?template=https://github.com/buildkite/monorepo-example/tree/main/templates/root)
 
-<br/>
+---
 
-## Using the monorepo-diff-buildkite-plugin
-The  [**monorepo-diff buildkite plugin**](https://github.com/buildkite-plugins/monorepo-diff-buildkite-plugin), triggers pipelines by watching folders in the monorepo. The configuration supports running [Command](https://buildkite.com/docs/pipelines/command-step) and [Trigger](https://buildkite.com/docs/pipelines/trigger-step) steps
+### 2. **Create the Service App Pipeline**
 
-<br/>
+This pipeline will run whenever changes are detected in the `service-app/` folder.
 
- **Example 1**
- <br/>
- 
- ```yaml
- steps:
-   - label: "Triggering pipelines"
-     plugins:
-       - buildkite-plugins/monorepo-diff#v1.0.1:
-           diff: "git diff --name-only HEAD~1"
-           watch:
-             - path: app/
-               config:
-                 trigger: "app-deploy"
-             - path: test/bin/
-               config:
-                 command: "echo Make Changes to Bin"
- ```
- 
- 
- * Changes to the path `app/` triggers the pipeline `app-deploy`
- * Changes to the path `test/bin` will run the respective configuration command
- 
- <br/>
- 
- ⚠️  Warning : The user has to explictly state the paths they want to monitor. For instance if a user,  is only watching path `app/` changes made to `app/bin` will trigger the configuration. This is because the subfolder `/bin` even though not specified, is still under the parent folder.
- 
- <br/>
- 
-  **Example 2**
-  <br/>
-     
- 
- ```yaml
-     steps:
-       - label: "Triggering pipelines with plugin"
-         plugins:
-           - buildkite-plugins/monorepo-diff#v1.0.1:
-              watch:           
-               - path: test/.buildkite/
-                 config: # Required [trigger step configuration]
-                   trigger: test-pipeline # Required [trigger pipeline slug]
-               - path:
-                   - app/
-                   - app/bin/service/
-                 config:
-                     trigger: "data-generator"
-                     label: ":package: Generate data"
-                     build:
-                       meta_data:
-                         release-version: "1.1"
- ```
- 
- * When changes are detected in the path `test/.buildkite/`  it triggers the pipeline `test-pipeline`
- * If the changes are made to either `app/` or `app/bin/service/` it triggers the pipeline `data-generator`
- 
+[![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new?template=https://github.com/buildkite/monorepo-example/tree/main/templates/service-app)
 
-<br/>
+---
+
+### 3. **Create the Test Pipeline**
+
+This pipeline will run whenever changes are detected in the `test/` folder.
+
+[![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new?template=https://github.com/buildkite/monorepo-example/tree/main/templates/test)
+
+---
+
+📄 View the full [root pipeline template](templates/root/.buildkite/template.yml)
+📄 View the full [service-app pipeline template](templates/service-app/.buildkite/template.yml)
+📄 View the full [test pipeline template](templates/test/.buildkite/template.yml)
+
+---
+
+## GitHub Webhook Setup
+
+Ensure GitHub webhooks or GitHub App integration is enabled for the repository:
+- Go to Pipeline Settings → GitHub and follow the instructions.
+- Enable Push and Pull Request events.
+
+<!-- docs:end -->
 
 ## License
-
-See [License.md](License.md) (MIT)
+See [LICENSE.md (MIT)](LICENSE.md)
 

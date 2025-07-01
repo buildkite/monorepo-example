@@ -1,0 +1,8 @@
+name: "Monorepo Example: Root"
+description: "An example pipeline that detects changes in the monorepo and triggers sub-pipelines."
+emoji: ":classical_building:"
+languages:
+  - "Shell"
+steps:
+  - command: "buildkite-agent pipeline upload"
+    label: ":pipeline:"
