@@ -10,5 +10,3 @@ steps:
             - path: "test"
               config:
                 trigger: "monorepo-test-example"
-
-

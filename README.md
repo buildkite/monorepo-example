@@ -4,23 +4,23 @@ This repository demonstrates a [Buildkite](https://buildkite.com/) setup for man
 
 👉 **See these examples in action:**
 
-- [Root pipeline](https://buildkite.com/your-org/monorepo-example/builds/latest?branch=main) - detects changes and triggers other pipelines
-- [Service App pipeline](https://buildkite.com/your-org/monorepo-service-app-example/builds/latest?branch=main) - runs service-app pipeline
-- [Test pipeline](https://buildkite.com/your-org/monorepo-test-example/builds/latest?branch=main) - runs test pipeline
+- [Root pipeline](https://buildkite.com/buildkite/monorepo-example/builds/latest?branch=main) - detects changes and triggers other pipelines
+- [Service App pipeline](https://buildkite.com/buildkite/monorepo-service-app-example/builds/latest?branch=main) - runs `service-app` pipeline
+- [Test pipeline](https://buildkite.com/buildkite/monorepo-test-example/builds/latest?branch=main) - runs `test` pipeline
 
 See the full [Getting Started Guide](https://buildkite.com/docs/guides/getting-started) and [**How to set up Continuous Integration for a monorepo using Buildkite**](https://adikari.medium.com/set-up-continuous-integration-for-monorepo-using-buildkite-61539bb0ed76) for step-by-step instructions on how to get this running.
 
-<a href="https://buildkite.com/your-org/monorepo-example/builds/latest?branch=main">
+<a href="https://buildkite.com/buildkite/monorepo-example/builds/latest?branch=main">
   <img width="2400" alt="Screenshot of the root monorepo pipeline" src=".buildkite/screenshot-1.png" />
 </a>
 <p align="left"><i>Root pipeline: detects changed folders and triggers service/test pipelines</i></p>
 
-<a href="https://buildkite.com/your-org/monorepo-service-app-example/builds/latest?branch=main">
+<a href="https://buildkite.com/buildkite/monorepo-service-app-example/builds/latest?branch=main">
   <img width="2400" alt="Screenshot of service-app pipeline" src=".buildkite/screenshot-2.png" />
 </a>
 <p align="left"><i>Service App pipeline: triggered by changes to <code>service-app/</code></i></p>
 
-<a href="https://buildkite.com/your-org/monorepo-test-example/builds/latest?branch=main">
+<a href="https://buildkite.com/buildkite/monorepo-test-example/builds/latest?branch=main">
   <img width="2400" alt="Screenshot of test pipeline" src=".buildkite/screenshot-3.png" />
 </a>
 <p align="left"><i>Test pipeline: triggered by changes to <code>test/</code></i></p>
@@ -112,6 +112,11 @@ steps:
 > command: "buildkite-agent pipeline upload path/to/.buildkite/pipeline.yml"
 > ```
 
+## GitHub Webhook Setup
+
+Ensure GitHub webhooks or GitHub App integration is enabled for the repository:
+- Go to Pipeline Settings → GitHub and follow the instructions.
+- Enable Push and Pull Request events.
 
 ## Create the Pipelines
 
@@ -143,16 +148,10 @@ This pipeline will run whenever changes are detected in the `test/` folder.
 
 📄 View the full [test pipeline template](templates/test/.buildkite/template.yml).
 
----
-
-## GitHub Webhook Setup
-
-Ensure GitHub webhooks or GitHub App integration is enabled for the repository:
-- Go to Pipeline Settings → GitHub and follow the instructions.
-- Enable Push and Pull Request events.
-
 <!-- docs:end -->
 
+---
+
 ## License
-See [LICENSE.md (MIT)](LICENSE.md)
+See [LICENSE.md](LICENSE.md) (MIT)
 
