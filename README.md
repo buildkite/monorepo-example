@@ -8,6 +8,8 @@ This repository demonstrates a [Buildkite](https://buildkite.com/) setup for man
 - [Service App pipeline](https://buildkite.com/your-org/monorepo-service-app-example/builds/latest?branch=main) - runs service-app pipeline
 - [Test pipeline](https://buildkite.com/your-org/monorepo-test-example/builds/latest?branch=main) - runs test pipeline
 
+See the full [Getting Started Guide](https://buildkite.com/docs/guides/getting-started) and [**How to set up Continuous Integration for a monorepo using Buildkite**](https://adikari.medium.com/set-up-continuous-integration-for-monorepo-using-buildkite-61539bb0ed76) for step-by-step instructions on how to get this running.
+
 <a href="https://buildkite.com/your-org/monorepo-example/builds/latest?branch=main">
   <img width="2400" alt="Screenshot of the root monorepo pipeline" src=".buildkite/screenshot-1.png" />
 </a>
