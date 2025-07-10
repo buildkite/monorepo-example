@@ -121,6 +121,8 @@ This pipeline uses the `monorepo-diff` plugin to detect changes and trigger the 
 
 [![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new?template=https://github.com/buildkite/monorepo-example/tree/main/templates/root)
 
+📄 View the full [root pipeline template](templates/root/.buildkite/template.yml).
+
 ---
 
 ### 2. **Create the Service App Pipeline**
@@ -128,6 +130,8 @@ This pipeline uses the `monorepo-diff` plugin to detect changes and trigger the 
 This pipeline will run whenever changes are detected in the `service-app/` folder.
 
 [![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new?template=https://github.com/buildkite/monorepo-example/tree/main/templates/service-app)
+
+📄 View the full [service-app pipeline template](templates/service-app/.buildkite/template.yml).
 
 ---
 
@@ -137,13 +141,7 @@ This pipeline will run whenever changes are detected in the `test/` folder.
 
 [![Add to Buildkite](https://buildkite.com/button.svg)](https://buildkite.com/new?template=https://github.com/buildkite/monorepo-example/tree/main/templates/test)
 
----
-
-📄 View the full [root pipeline template](templates/root/.buildkite/template.yml)
-
-📄 View the full [service-app pipeline template](templates/service-app/.buildkite/template.yml)
-
-📄 View the full [test pipeline template](templates/test/.buildkite/template.yml)
+📄 View the full [test pipeline template](templates/test/.buildkite/template.yml).
 
 ---
 
