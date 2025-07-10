@@ -140,7 +140,9 @@ This pipeline will run whenever changes are detected in the `test/` folder.
 ---
 
 📄 View the full [root pipeline template](templates/root/.buildkite/template.yml)
+
 📄 View the full [service-app pipeline template](templates/service-app/.buildkite/template.yml)
+
 📄 View the full [test pipeline template](templates/test/.buildkite/template.yml)
 
 ---
