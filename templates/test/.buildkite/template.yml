@@ -1,0 +1,8 @@
+name: "Monorepo Example: Test"
+description: "An example pipeline that runs when changes are detected in the test folder."
+emoji: ":classical_building:"
+languages:
+  - "Shell"
+steps:
+  - command: "buildkite-agent pipeline upload test/.buildkite/pipeline.yml"
+    label: ":pipeline:"

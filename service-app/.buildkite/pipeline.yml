@@ -1,0 +1,6 @@
+steps:
+  - label: ":package: Build Service App"
+    command: echo "Building the Service App..."
+
+  - label: ":rocket: Deploy Service Appwah"
+    command: ./service-app/bin/deploy
