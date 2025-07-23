@@ -4,5 +4,5 @@ set -euo pipefail
 
 STAGE=$1
 
-echo "Deploying foo service to $STAGE. test diff"
+echo "Deploying foo service to $STAGE."
 
