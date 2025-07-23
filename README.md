@@ -37,7 +37,17 @@ This repository contains:
 
 Each sub-pipeline is triggered when files within its folder change.
 
+## First time running this?
 
+If you trigger a build without making changes to `service-app/` or `test/`, you’ll see:
+
+- A ✅ green build
+- A message at the top of the build (in the **Annotations** tab) saying:
+  _“No changes detected - no pipelines triggered.”_
+
+This is expected! The root pipeline uses the [`monorepo-diff`](https://github.com/buildkite-plugins/monorepo-diff-buildkite-plugin) plugin to only trigger pipelines when changes are detected in watched folders.
+
+> 💡 **Tip:** To test it out, try committing a small change inside `service-app/` or `test/`.
 
 ## Setup
 
