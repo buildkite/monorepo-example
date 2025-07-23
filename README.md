@@ -15,7 +15,7 @@ See the full [Getting Started Guide](https://buildkite.com/docs/guides/getting-s
 </a>
 <p align="left"><i>Root pipeline: detects changed folders and triggers service/test pipelines</i></p>
 
-<a href="https://buildkite.com/buildkite/monorepo-service-app-example/builds/latest?branch=main">
+<a href="https://buildkite.com/buildkite/monorepo-service-app-example/builds/latest">
   <img width="2400" alt="Screenshot of service-app pipeline" src=".buildkite/screenshot-2.png" />
 </a>
 <p align="left"><i>Service App pipeline: triggered by changes to <code>service-app/</code></i></p>
